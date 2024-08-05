@@ -1,0 +1,19 @@
+.information {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.information > li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn {
+  display: inline-block;
+
+  font-family: inherit;
+
+  cursor: pointer;
+}
