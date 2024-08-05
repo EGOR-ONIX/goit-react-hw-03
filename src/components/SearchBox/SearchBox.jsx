@@ -6,7 +6,7 @@ function SearchBox({ inputName, setInputName }) {
   };
   return (
     <>
-      <p>Find contacts by name:</p>
+      <p>Find contacts by name</p>
       <input
         className={css.input}
         type="text"

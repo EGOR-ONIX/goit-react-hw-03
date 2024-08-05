@@ -2,43 +2,43 @@ import css from "./ContactForm.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { nanoid } from "nanoid";
 import * as Yup from "yup";
+import "yup-phone";
 
 function ContactForm({ onAdd }) {
-  const initialContact = {
+  const initialValues = {
     name: "",
     number: "",
   };
   const nameFieldId = nanoid();
   const numberFieldId = nanoid();
 
+  const phoneRegExp = /^[0-9]{3}-[0-9]{2}-[0-9]{2}$/;
   const FormScheme = Yup.object().shape({
     name: Yup.string()
-      .min(3, "Too short!")
-      .max(50, "To0 long!")
-      .required("Required!"),
+      .min(3, "*The contact name is quite short!")
+      .max(50, "*The contact name is quite long!")
+      .required("*Contact name is a required field!"),
     number: Yup.string()
-      .min(3, "Too short!")
-      .max(50, "To0 long!")
-      .required("Required!"),
+      .matches(phoneRegExp, "*The number does not match the format: xxx-xx-xx")
+      .required("*Contact number is a required field!"),
   });
 
   const handleSubmit = (values, actions) => {
-    const newContact = { id: nanoid(), ...values };
-    onAdd(newContact);
-    console.log(newContact);
+    onAdd({ id: nanoid(), ...values });
     actions.resetForm();
   };
 
   return (
     <Formik
-      initialValues={initialContact}
+      initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={FormScheme}
     >
       <Form className={css.form}>
-        <label className={css.input} htmlFor={nameFieldId}>
+        <label className={css["wrapper-input"]} htmlFor={nameFieldId}>
           <span>Name</span>
           <Field
+            className={css.input}
             type="text"
             name="name"
             placeholder="Egor Shvachko"
@@ -47,12 +47,13 @@ function ContactForm({ onAdd }) {
           <ErrorMessage className={css.error} name="name" component="span" />
         </label>
 
-        <label className={css.input} htmlFor={numberFieldId}>
+        <label className={css["wrapper-input"]} htmlFor={numberFieldId}>
           <span>Number</span>
           <Field
+            className={css.input}
             type="tel"
             name="number"
-            placeholder="068-595-73-12"
+            placeholder="xxx-xx-xx"
             id={numberFieldId}
           />
           <ErrorMessage className={css.error} name="number" component="span" />

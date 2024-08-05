@@ -32,7 +32,7 @@ function App() {
 
   return (
     <>
-      <h1>Phonebook</h1>
+      <h1 className="title">Phonebook</h1>
       <ContactForm onAdd={addContact} />
       <SearchBox inputName={inputName} setInputName={setInputName} />
       <ContactList contacts={visibleContacts} onDelete={deleteContact} />
